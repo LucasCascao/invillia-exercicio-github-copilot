@@ -13,6 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
       // Clear loading message
       activitiesList.innerHTML = "";
 
+      // Function to create participants list
+      function createParticipantsList(participants) {
+        if (participants.length === 0) {
+          return "<p>No participants yet</p>";
+        }
+
+        const list = document.createElement("ul");
+        list.className = "participants-list";
+
+        participants.forEach((participant) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = participant;
+          list.appendChild(listItem);
+        });
+
+        return list.outerHTML;
+      }
+
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
@@ -25,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <div><strong>Participants:</strong> ${createParticipantsList(details.participants)}</div>
         `;
 
         activitiesList.appendChild(activityCard);
